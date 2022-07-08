@@ -1,0 +1,9 @@
+export const GET_TODOS = 'GET_TODOS';
+export const GET_TODOS_SUCCESS = 'GET_TODOS_SUCCESS';
+export const GET_SINGLE_TODO = 'GET_SINGLE_TODO';
+export const ADD_TODO = 'ADD_TODO';
+export const ADD_TODO_SUCCESS = 'ADD_TODO_SUCCESS';
+export const DELETE_TODO = 'DELETE_TODO';
+export const COMPLETE_TODO = 'COMPLETE_TASK';
+export const DELETE_ALL_TODOS = 'DELETE_ALL_TODOS';
+export const COMPLETE_ALL_TODOS = 'COMPLETE_ALL_TODOS';
