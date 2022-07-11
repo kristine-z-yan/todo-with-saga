@@ -1,8 +1,16 @@
 import * as React from 'react';
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-
+import { v4 as uuidv4 } from 'uuid';
 import Box from "@mui/material/Box";
+import Task from "../../models/task";
+import {
+    GET_TODOS,
+    ADD_TODO,
+    DELETE_ALL_TODOS,
+    COMPLETE_ALL_TODOS
+} from "./reducers/actions";
+
 import {
     Button, ButtonGroup,
     Divider,
@@ -19,11 +27,6 @@ import List from "@mui/material/List";
 import ToDoListItem from "../../components/ToDoListItem/ToDoListItem";
 import Typography from "@mui/material/Typography";
 import {RootState} from "../../redux";
-import Task from "../../models/task";
-import {
-    GET_TODOS,
-    ADD_TODO
-} from "./reducers/actions";
 
 const ToDo = () => {
 const [filter, setFilter] = useState('all');
@@ -45,10 +48,8 @@ if (allTasks.length > 0 ) {
     if (filter !== 'all') {
         filterBy = filter === 'completed';
         allTasks = allTasks.filter((task: Task) => task.completed === filterBy)
-
     }
     taskListItems = allTasks.map( (task) => {
-        console.log(task);
         if(task.completed) completedAmount++;
         return (
             <ToDoListItem title={task.title} completed={task.completed} key={`task-`+ task.id} id={task.id} />
@@ -68,8 +69,14 @@ const inputBlurHandler = () => {
 };
 
 const submitTaskHandler = () => {
+    const _id = uuidv4();
+    const data = {
+        id: _id,
+        completed: false,
+        title: taskLabel
+    }
     if (valueIsValid) {
-        dispatch({type: ADD_TODO, taskLabel});
+        dispatch({type: ADD_TODO, payload: data});
         setTaskLabel('');
         setIsTouched(false);
     }
@@ -82,11 +89,11 @@ const handleKeypress = (e: React.KeyboardEvent<HTMLDivElement>) => {
 };
 
 const deleteAllHandler = () => {
-//     dispatch(tasksActions.deleteAll())
+    dispatch({type: DELETE_ALL_TODOS});
 }
 
 const completeAllHandler = () => {
-//     dispatch(tasksActions.completeAll())
+    dispatch({type: COMPLETE_ALL_TODOS});
 }
 
 const filterTasksHandler = (el: React.ChangeEvent<HTMLSelectElement>) => {

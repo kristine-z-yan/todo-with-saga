@@ -3,9 +3,8 @@ import {
   ADD_TODO,
   ADD_TODO_SUCCESS,
   COMPLETE_TODO,
-  COMPLETE_ALL_TODOS,
-  DELETE_ALL_TODOS,
-  DELETE_TODO, GET_TODOS_SUCCESS
+  DELETE_TODO_SUCCESS,
+  GET_TODOS_SUCCESS
 } from './actions';
 
 const initialState = {
@@ -36,17 +35,22 @@ export default function todoReducer (state = initialState, action) {
       }
     }
     case ADD_TODO_SUCCESS: {
-      state.all = [
-        ...state.all,
-        {
-          text: action.payload,
-          completed: false,
-          // id: Math.floor(Math.random()*100)
-        }
-      ]
+      return {
+        ...state,
+        loading: false
+      }
     }
     case COMPLETE_TODO: {
-
+      return {
+        ...state,
+        loading: true
+      }
+    }
+    case DELETE_TODO_SUCCESS: {
+      return {
+        ...state,
+        loading: true
+      }
     }
     default: {
       return {...state}
